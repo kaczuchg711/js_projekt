@@ -12,7 +12,6 @@ class Window:
             self._b = b
     def __del__(self):
         """remove window number in nr_set"""
-        print(self.nr)
         Window.nr_set.remove(self._nr)
 
     @property
@@ -38,6 +37,3 @@ class Window:
     @b.setter
     def b(self, b):
         self._b = b
-
-w1 = Window(1, True, False)
-w2 = Window(2, True, False)
