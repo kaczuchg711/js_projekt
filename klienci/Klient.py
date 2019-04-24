@@ -5,13 +5,12 @@ class Klient:
     def __init__(self, kind):
         self._kind = kind
         self._waiting_time = 0
-        self.wejscie()
 
     def __del__(self):
-        self.wyjscie()
+        pass
 
     def __str__(self):
-        return self._kind
+        return 'typ:'+self._kind
 
     @property
     def kind(self):
