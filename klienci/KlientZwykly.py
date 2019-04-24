@@ -2,4 +2,5 @@ from klienci.Klient import Klient
 
 
 class KlientZwykly(Klient):
-    pass
+    def __init__(self,kind):
+        super(KlientZwykly,self).__init__(kind)

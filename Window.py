@@ -10,6 +10,7 @@ class Window:
             self._nr = n
             self._a = a
             self._b = b
+
     def __del__(self):
         """remove window number in nr_set"""
         Window.nr_set.remove(self._nr)
