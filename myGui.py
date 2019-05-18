@@ -2,12 +2,13 @@ from typing import Iterable
 import pygame
 from klienci.KlientZwykly import *
 from klienci.KlientVIP import *
+from Window import *
 from myQueue import *
 class myGui:
     def __init__(self):
         pygame.init()
         self.__screen_lenght = 800
-        self.__screen_width = 800
+        self.__screen_width = 600
         self.__screen = pygame.display.set_mode((self.__screen_lenght, self.__screen_width))
         self.__exit = False
         self.__mouse_pos = []
@@ -19,6 +20,7 @@ class myGui:
         self.CheckBox()
         self.__nq = myQueue()
         self.__vq = myQueue()
+        self.__w = [Window(0),Window(1),Window(2)]
 
     def button_mod(self):
 
@@ -77,7 +79,8 @@ class myGui:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.exit = True
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[5]):
-                """zwalnia klientów"""
+                """zwalnia klientów
+                ostatecznie nie moze tego robić"""
                 for x in range(self.number_of_clients[2] + self.number_of_clients[3]):
                     self.vq.pop()
 
@@ -118,8 +121,43 @@ class myGui:
                     else:
                         x.is_check = True
                         print(x.is_check)
-            else:
-                pass
+            # dla pierwszego okienka
+            # if self.cb[0].is_check and not self.__w[0].a:
+            #     self.__w[0].a = True
+            #     print(self.__w[0])
+            #
+            # if not self.cb[0].is_check and self.__w[0].a:
+            #     self.__w[0].a = False
+            #     print(self.__w[0])
+            #
+            # if self.cb[3].is_check and not self.__w[0].b:
+            #     self.__w[0].b = True
+            #     print(self.__w[0])
+            #
+            # if not self.cb[3].is_check and self.__w[0].b:
+            #     self.__w[0].b = False
+            #     print(self.__w[0])
+
+
+        for i,x in enumerate(self.cb):
+
+            if x in self.cb[:3]:
+                if self.cb[i].is_check and not self.__w[i].a:
+                    self.__w[i].a = True
+                    print(self.__w[i])
+                if not self.cb[i].is_check and self.__w[i].a:
+                    self.__w[i].a = False
+                    print(self.__w[i])
+            if x in self.cb[3:]:
+                if self.cb[i].is_check and not self.__w[i%3].b:
+                    self.__w[i%3].b = True
+                    print(self.__w[i%3])
+                if not self.cb[i].is_check and self.__w[i%3].b:
+                    self.__w[i%3].b = False
+                    print(self.__w[i%3])
+
+
+
 
     def drawing(self):
 
@@ -153,47 +191,47 @@ class myGui:
 
         # lines
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (1 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght),
-                         (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght), 1)
+                         (1 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (1 / 8 * self.screen_lenght, 5 / 10 * self.screen_lenght),
-                         (7 / 8 * self.screen_lenght, 5 / 10 * self.screen_lenght), 1)
+                         (1 / 8 * self.screen_lenght, 5 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 5 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (1 / 8 * self.screen_lenght, 6 / 10 * self.screen_lenght),
-                         (7 / 8 * self.screen_lenght, 6 / 10 * self.screen_lenght), 1)
+                         (1 / 8 * self.screen_lenght, 6 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 6 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (1 / 8 * self.screen_lenght, 7 / 10 * self.screen_lenght),
-                         (7 / 8 * self.screen_lenght, 7 / 10 * self.screen_lenght), 1)
+                         (1 / 8 * self.screen_lenght, 7 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght),
-                         (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght), 1)
+                         (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
         # vertical
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (1 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght),
-                         (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght), 1)
+                         (1 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (3 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght),
-                         (3 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght), 1)
+                         (3 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (3 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (4 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght),
-                         (4 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght), 1)
+                         (4 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (4 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (5 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght),
-                         (5 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght), 1)
+                         (5 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (5 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (6 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght),
-                         (6 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght), 1)
+                         (6 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (6 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
-                         (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_lenght),
-                         (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_lenght), 1)
+                         (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
 
         # napisy
 

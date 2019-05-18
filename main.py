@@ -12,3 +12,9 @@ while not g.exit:
     g.events()
     g.go()
 
+
+# tab=["a","b","c"]
+#
+# # najpier iterator potem zawartość
+# for i,x in enumerate(tab):
+#     print(i,x)

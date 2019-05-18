@@ -16,16 +16,12 @@ class Window:
         Window.nr_set.remove(self._nr)
 
     @property
-    def nr(self):
-        return self._nr
-
-    @nr.setter
-    def nr(self, nr):
-        self._nr = nr
-
-    @property  # print(w.a)
     def a(self):
         return self._a
+
+    @property
+    def nr(self):
+        return self._nr
 
     @a.setter  # w.a=True
     def a(self, a):
@@ -38,3 +34,6 @@ class Window:
     @b.setter
     def b(self, b):
         self._b = b
+
+    def __str__(self) -> str:
+        return "Window nr: " + str(self.nr) + "a: " + str(self.a) + " b: " + str(self.b)
