@@ -1,8 +1,8 @@
 from typing import Iterable
-
 import pygame
-
-
+from klienci.KlientZwykly import *
+from klienci.KlientVIP import *
+from myQueue import *
 class myGui:
     def __init__(self):
         pygame.init()
@@ -14,9 +14,11 @@ class myGui:
         self.__b = [Button() for x in range(6)]
         self.__cb = [CheckBox() for x in range(6)]
         self.__t = [0 for x in range(6)]
-        self.__how_many_in_queue = [0 for x in range(4)]
+        self.__number_of_clients = [0 for x in range(4)]
         self.button_mod()
         self.CheckBox()
+        self.__nq = myQueue()
+        self.__vq = myQueue()
 
     def button_mod(self):
 
@@ -75,14 +77,38 @@ class myGui:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.exit = True
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[5]):
+                """zwalnia klientów"""
+                for x in range(self.number_of_clients[2] + self.number_of_clients[3]):
+                    self.vq.pop()
+
+                for x in range(self.number_of_clients[0] + self.number_of_clients[1]):
+                    self.vq.pop()
+
                 self.exit = True
 
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[0]):
-                """zmiana koloru pierwszego przycisku"""
-                if self.b[0].color != (255, 0, 0):
-                    self.b[0].color = (255, 0, 0)
-                else:
-                    self.b[0].color = (0, 0, 255)
+                """dodawanie klientów"""
+                self.nq.push(KlientZwykly("A"))
+                self.number_of_clients[0] +=1
+                print("dodawanie klientów A")
+
+            if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[1]):
+                self.nq.push(KlientZwykly("B"))
+                self.number_of_clients[1] +=1
+                print("dodawanie klientów B")
+
+            if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[2]):
+                self.vq.push(KlientVIP("A"))
+                self.number_of_clients[2] +=1
+                print("dodawanie klientów VIP A")
+
+            if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[3]):
+                self.vq.push(KlientVIP("B"))
+                self.number_of_clients[3] +=1
+                print("dodawanie klientów VIP B")
+
+
+
 
             for x in self.cb:
                 if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(x):
@@ -106,13 +132,17 @@ class myGui:
             # ile czeka
             self.screen.blit(x.label, text_rect)
 
+        # czyli tu musi być osobno
+
+
         for i,x in enumerate(self.b[:2]):
-            label = font.render(self.__how_many_in_queue[i].__str__(), 1, (255, 255, 255))
+            label = font.render(self.number_of_clients[i].__str__(), 1, (255, 255, 255))
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
 
+        # to storzone tylko dla przesuniecia tego + 10
         for i,x in enumerate(self.b[2:4]):
-            label = font.render(self.__how_many_in_queue[i].__str__(), 1, (255, 255, 255))
+            label = font.render(self.number_of_clients[i+2].__str__(), 1, (255, 255, 255))
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x + 10, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
 
@@ -191,11 +221,12 @@ class myGui:
         text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_lenght))
         self.screen.blit(label, text_rect)
 
+        # łącznie
+
         label = font.render("Łącznie", 1, (255, 255, 255))
         text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6 / 8 * self.screen_lenght))
         self.screen.blit(label, text_rect)
 
-        # łącznie
         label = font.render(self.t[0].__str__(), 1, (255, 255, 255))
         text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_lenght))
         self.screen.blit(label, text_rect)
@@ -220,10 +251,30 @@ class myGui:
         text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_lenght))
         self.screen.blit(label, text_rect)
 
+        #
+
     def go(self):
         self.mouse_pos = pygame.mouse.get_pos()
+        self.screen.fill((0, 0, 0)) #odświerzanie
         self.drawing()
         pygame.display.flip()
+    #gs
+
+    @property
+    def nq(self):
+        return self.__nq
+
+    @nq.setter
+    def nq(self, nq):
+        self.__nq = nq
+
+    @property
+    def vq(self):
+        return self.__vq
+
+    @vq.setter
+    def nq(self, vq):
+        self.__vq = vq
 
     @property
     def screen_lenght(self):
@@ -238,12 +289,12 @@ class myGui:
         self.__t = v
 
     @property
-    def how_many_in_queue(self):
-        return self.__t
+    def number_of_clients(self):
+        return self.__number_of_clients
 
-    @how_many_in_queue.setter
-    def how_many_in_queue(self, v):
-        self.__how_many_in_queue = v
+    @number_of_clients.setter
+    def __numer_of_clients(self, v):
+        self.__number_of_clients = v
 
     @property
     def screen_width(self):
@@ -277,6 +328,8 @@ class myGui:
     def cb(self):
         return self.__cb
 
+    #
+
 
 class Button:
     def __init__(self, x=30, y=30, length=80, width=50, color=(0, 128, 255), writing="A",
@@ -305,6 +358,8 @@ class Button:
     def change_writing_color(self, writing_color):
         self.__writing_color = writing_color
         self.__label = self.__font.render(self.__writing, 1, (writing_color))
+
+    # gs
 
     @property
     def color(self):
@@ -349,6 +404,10 @@ class Button:
     @label.setter
     def label(self, l):
         self.__lenght = l
+
+
+    #
+
 
 
 class CheckBox(Button):
