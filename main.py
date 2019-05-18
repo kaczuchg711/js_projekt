@@ -3,8 +3,11 @@ from klienci.KlientZwykly import *
 from klienci.KlientVIP import *
 from MyQueue import MyQueue
 import time
-from my_gui import *
+from myGui import *
 
-g = GUI()
-g.pack()
-g.go()
+
+g = myGui()
+
+while not g.exit:
+    g.events()
+    g.go()
