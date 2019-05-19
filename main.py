@@ -1,4 +1,4 @@
-import Window as w
+import Counter as w
 from klienci.KlientZwykly import *
 from klienci.KlientVIP import *
 from myQueue import myQueue

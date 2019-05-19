@@ -2,13 +2,13 @@ from typing import Iterable
 import pygame
 from klienci.KlientZwykly import *
 from klienci.KlientVIP import *
-from Window import *
+from Counter import *
 from myQueue import *
 class myGui:
     def __init__(self):
         pygame.init()
-        self.__screen_lenght = 800
-        self.__screen_width = 600
+        self.__screen_lenght = 1000
+        self.__screen_width = 800
         self.__screen = pygame.display.set_mode((self.__screen_lenght, self.__screen_width))
         self.__exit = False
         self.__mouse_pos = []
@@ -17,10 +17,10 @@ class myGui:
         self.__t = [0 for x in range(6)]
         self.__number_of_clients = [0 for x in range(4)]
         self.button_mod()
-        self.CheckBox()
-        self.__nq = myQueue()
-        self.__vq = myQueue()
-        self.__w = [Window(0),Window(1),Window(2)]
+        self.CheckBox_mod()
+        self.__nq = myQueue("normalna")
+        self.__vq = myQueue("vip")
+        self.__w = [Counter(0),Counter(1),Counter(2)]
 
     def button_mod(self):
 
@@ -51,13 +51,13 @@ class myGui:
         self.b[5].change_writing("Koniec")
         self.b[5].change_writing_color((0, 0, 0))
 
-    def CheckBox(self):
-        self.cb[0].change_pos(3.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_lenght)
-        self.cb[1].change_pos(4.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_lenght)
-        self.cb[2].change_pos(5.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_lenght)
-        self.cb[3].change_pos(3.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_lenght)
-        self.cb[4].change_pos(4.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_lenght)
-        self.cb[5].change_pos(5.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_lenght)
+    def CheckBox_mod(self):
+        self.cb[0].change_pos(3.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_width)
+        self.cb[1].change_pos(4.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_width)
+        self.cb[2].change_pos(5.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_width)
+        self.cb[3].change_pos(3.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_width)
+        self.cb[4].change_pos(4.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_width)
+        self.cb[5].change_pos(5.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_width)
 
     def get_cb_to_check(self):
         return [x for x in self.cb if x.on_mouse]
@@ -93,22 +93,51 @@ class myGui:
                 """dodawanie klientów"""
                 self.nq.push(KlientZwykly("A"))
                 self.number_of_clients[0] +=1
-                print("dodawanie klientów A")
-
+                print("dodanie klienta A")
+                print("kolejka VIP", self.vq)
+                print("kolejka zwykla", self.nq)
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[1]):
                 self.nq.push(KlientZwykly("B"))
                 self.number_of_clients[1] +=1
                 print("dodawanie klientów B")
-
+                print("kolejka VIP", self.vq)
+                print("kolejka zwykla", self.nq)
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[2]):
                 self.vq.push(KlientVIP("A"))
                 self.number_of_clients[2] +=1
                 print("dodawanie klientów VIP A")
-
+                print("kolejka VIP", self.vq)
+                print("kolejka zwykla", self.nq)
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[3]):
                 self.vq.push(KlientVIP("B"))
                 self.number_of_clients[3] +=1
                 print("dodawanie klientów VIP B")
+                print("kolejka VIP", self.vq)
+                print("kolejka zwykla", self.nq)
+
+
+            # do tablicy vq dodaje normalnych klijentów do nq chyba tez dodaje vip
+            if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[4]):
+                if self.vq.empty() == False:
+                    temp = self.vq.pop()
+                    if temp.kind == "A":
+                        self.number_of_clients[2] -=1
+                    if temp.kind == "B":
+                        self.number_of_clients[3] -=1
+                elif self.nq.empty() == False:
+                    temp = self.nq.pop()
+                    if temp.kind == "A":
+                        self.number_of_clients[0] -=1
+                    if temp.kind == "B":
+                        self.number_of_clients[1] -=1
+
+
+
+
+
+
+
+
 
 
 
@@ -121,22 +150,8 @@ class myGui:
                     else:
                         x.is_check = True
                         print(x.is_check)
-            # dla pierwszego okienka
-            # if self.cb[0].is_check and not self.__w[0].a:
-            #     self.__w[0].a = True
-            #     print(self.__w[0])
-            #
-            # if not self.cb[0].is_check and self.__w[0].a:
-            #     self.__w[0].a = False
-            #     print(self.__w[0])
-            #
-            # if self.cb[3].is_check and not self.__w[0].b:
-            #     self.__w[0].b = True
-            #     print(self.__w[0])
-            #
-            # if not self.cb[3].is_check and self.__w[0].b:
-            #     self.__w[0].b = False
-            #     print(self.__w[0])
+
+
 
 
         for i,x in enumerate(self.cb):
@@ -236,57 +251,57 @@ class myGui:
         # napisy
 
         label = font.render("Okienko 1", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render("Okienko 2", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render("Okienko 3", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render("Łącznie", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render("Sprawa A", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render("Sprawa B", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         # łącznie
 
         label = font.render("Łącznie", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render(self.t[0].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render(self.t[1].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render(self.t[2].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render(self.t[3].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render(self.t[4].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render(self.t[5].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_lenght))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         #
@@ -311,7 +326,7 @@ class myGui:
         return self.__vq
 
     @vq.setter
-    def nq(self, vq):
+    def vq(self, vq):
         self.__vq = vq
 
     @property
