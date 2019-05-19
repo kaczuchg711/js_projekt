@@ -6,3 +6,7 @@ class KlientVIP(Klient):
 
     def __str__(self):
         return KlientVIP.__name__+ ' ' + super(KlientVIP,self).__str__()
+
+    def tick(self):
+        if self.waiting_time == 0:
+            print("to skandaliczne")

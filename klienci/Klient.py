@@ -13,6 +13,14 @@ class Klient:
         return 'typ:'+self._kind
 
     @property
+    def waiting_time(self):
+        return self.waiting_time
+
+    @waiting_time.setter
+    def waiting_time(self,wt):
+        self._waiting_time = wt
+
+    @property
     def kind(self):
         return self._kind
 

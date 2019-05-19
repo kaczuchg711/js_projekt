@@ -10,7 +10,6 @@ from myGui import *
 g = myGui()
 
 while not g.exit:
-    g.events()
     g.go()
 
 

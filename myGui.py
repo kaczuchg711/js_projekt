@@ -6,6 +6,8 @@ from Counter import *
 from myQueue import *
 from myException import *
 from time import *
+from TimeMeasurement import *
+import os
 
 class myGui:
     def __init__(self):
@@ -26,6 +28,7 @@ class myGui:
         self.__counters = [Counter(0), Counter(1), Counter(2)]
         font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
         self.__info_under_next = ""
+        self.__data = TimeMeasurement()
 
     def button_mod(self):
 
@@ -73,6 +76,16 @@ class myGui:
             obj.on_mouse = False
             return False
 
+    def wait(self):
+        """ogladanie statystyk"""
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    os.sys.exit()
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    return
+
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -81,14 +94,11 @@ class myGui:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.exit = True
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[5]):
-                """zwalnia klientów
-                ostatecznie nie moze tego robić"""
-                for x in range(self.number_of_clients[2] + self.number_of_clients[3]):
-                    self.vq.pop()
+                self.screen.fill((0, 0, 0))  # odświerzanie
 
-                for x in range(self.number_of_clients[0] + self.number_of_clients[1]):
-                    self.vq.pop()
-
+                self.end_drawing()
+                pygame.display.flip()
+                self.wait()
                 self.exit = True
 
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[0]):
@@ -118,6 +128,7 @@ class myGui:
                 print("kolejka zwykla", self.nq)
 
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[4]):
+                """przyciskanie next"""
                 try:
                     if any(self.counters):
                         if not self.vq.empty():
@@ -211,6 +222,125 @@ class myGui:
                 x.client_in = 0
                 print("koniec obslugi")
 
+    def end_drawing(self):
+
+        font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
+
+        # lines
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 1 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 1 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 2 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 2 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 3 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 3 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_width), 1)
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 5 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 5 / 10 * self.screen_width), 1)
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 6 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 6 / 10 * self.screen_width), 1)
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 7 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 9 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
+
+
+
+        # vertical
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (1 / 8 * self.screen_lenght, 1 / 10 * self.screen_width),
+                         (1 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (3 / 8 * self.screen_lenght, 1 / 10 * self.screen_width),
+                         (3 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (4 / 8 * self.screen_lenght, 1 / 10 * self.screen_width),
+                         (4 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (5 / 8 * self.screen_lenght, 1 / 10 * self.screen_width),
+                         (5 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (6 / 8 * self.screen_lenght, 1 / 10 * self.screen_width),
+                         (6 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
+
+        pygame.draw.line(self.screen, (255, 255, 255),
+                         (7 / 8 * self.screen_lenght, 1 / 10 * self.screen_width),
+                         (7 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
+
+        # napisy
+        label = font.render("Klient Zwykły", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Okienko 1", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Okienko 2", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Okienko 3", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Łącznie", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+
+
+        label = font.render("Sprawa A", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Sprawa B", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 2.8 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        # łącznie
+
+        label = font.render("Łącznie", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Klient VIP", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Sprawa A", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Sprawa B", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        label = font.render("Łącznie", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6.8 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+
+
+
     def drawing(self):
 
         font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
@@ -227,7 +357,7 @@ class myGui:
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
 
-        # to storzone tylko dla przesuniecia tego + 10
+        # to stworzone tylko dla przesuniecia tego + 10
         for i, x in enumerate(self.b[2:4]):
             label = font.render(self.number_of_clients[i + 2].__str__(), 1, (255, 255, 255))
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x + 10, 1.2 * x.width + x.y))
@@ -247,46 +377,46 @@ class myGui:
         # lines
         pygame.draw.line(self.screen, (255, 255, 255),
                          (1 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
-                         (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_width), 1)
+                         (6 / 8 * self.screen_lenght, 4 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
                          (1 / 8 * self.screen_lenght, 5 / 10 * self.screen_width),
-                         (7 / 8 * self.screen_lenght, 5 / 10 * self.screen_width), 1)
+                         (6 / 8 * self.screen_lenght, 5 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
                          (1 / 8 * self.screen_lenght, 6 / 10 * self.screen_width),
-                         (7 / 8 * self.screen_lenght, 6 / 10 * self.screen_width), 1)
+                         (6 / 8 * self.screen_lenght, 6 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
                          (1 / 8 * self.screen_lenght, 7 / 10 * self.screen_width),
-                         (7 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
-        pygame.draw.line(self.screen, (255, 255, 255),
-                         (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_width),
-                         (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+                         (6 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
+        # pygame.draw.line(self.screen, (255, 255, 255),
+        #                  (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_width),
+        #                  (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
         # vertical
         pygame.draw.line(self.screen, (255, 255, 255),
                          (1 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
-                         (1 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+                         (1 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
                          (3 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
-                         (3 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+                         (3 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
                          (4 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
-                         (4 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+                         (4 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
                          (5 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
-                         (5 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+                         (5 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
 
         pygame.draw.line(self.screen, (255, 255, 255),
                          (6 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
-                         (6 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+                         (6 / 8 * self.screen_lenght, 7 / 10 * self.screen_width), 1)
 
-        pygame.draw.line(self.screen, (255, 255, 255),
-                         (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
-                         (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
+        # pygame.draw.line(self.screen, (255, 255, 255),
+        #                  (7 / 8 * self.screen_lenght, 4 / 10 * self.screen_width),
+        #                  (7 / 8 * self.screen_lenght, 8 / 10 * self.screen_width), 1)
 
         # napisy
 
@@ -316,9 +446,9 @@ class myGui:
         self.screen.blit(label, text_rect)
         temp_str = ""
 
-        label = font.render("Łącznie", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
+        # label = font.render("Łącznie", 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
 
         label = font.render("Sprawa A", 1, (255, 255, 255))
         text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_width))
@@ -330,33 +460,33 @@ class myGui:
 
         # łącznie
 
-        label = font.render("Łącznie", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render(self.t[0].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render(self.t[1].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render(self.t[2].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render(self.t[3].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render(self.t[4].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render(self.t[5].__str__(), 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
+        # label = font.render("Łącznie", 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
+        #
+        # label = font.render(self.t[0].__str__(), 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
+        #
+        # label = font.render(self.t[1].__str__(), 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
+        #
+        # label = font.render(self.t[2].__str__(), 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
+        #
+        # label = font.render(self.t[3].__str__(), 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
+        #
+        # label = font.render(self.t[4].__str__(), 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
+        #
+        # label = font.render(self.t[5].__str__(), 1, (255, 255, 255))
+        # text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 4.4 / 8 * self.screen_width))
+        # self.screen.blit(label, text_rect)
 
         #
 
@@ -364,6 +494,7 @@ class myGui:
         self.mouse_pos = pygame.mouse.get_pos()
         self.screen.fill((0, 0, 0))  # odświerzanie
         self.drawing()
+        self.events()
         pygame.display.flip()
 
     # gs

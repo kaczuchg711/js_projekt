@@ -14,6 +14,7 @@ class Counter:
             self._client_in = 0
             self._is_measure_time = False
             self._start_time = 0
+            self._clients_time = 0
     def __del__(self):
         """remove window number in nr_set"""
         Counter.nr_set.remove(self._nr)
