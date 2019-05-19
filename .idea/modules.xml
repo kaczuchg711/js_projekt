@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../aaamoje/python/brudno/.idea/brudno.iml" filepath="$PROJECT_DIR$/../../aaamoje/python/brudno/.idea/brudno.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../aaamoje/python/geometry/.idea/geometry.iml" filepath="$PROJECT_DIR$/../../aaamoje/python/geometry/.idea/geometry.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../lab/js_lab7/.idea/js_lab7.iml" filepath="$PROJECT_DIR$/../lab/js_lab7/.idea/js_lab7.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/projekt.iml" filepath="$PROJECT_DIR$/.idea/projekt.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../aaamoje/python/python_geometry/.idea/python_geometry.iml" filepath="$PROJECT_DIR$/../../aaamoje/python/python_geometry/.idea/python_geometry.iml" />
     </modules>

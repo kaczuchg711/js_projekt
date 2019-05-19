@@ -5,9 +5,10 @@ from klienci.KlientVIP import *
 from Counter import *
 from myQueue import *
 from myException import *
-from time import *
+import time
 from TimeMeasurement import *
 import os
+
 
 class myGui:
     def __init__(self):
@@ -29,6 +30,8 @@ class myGui:
         font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
         self.__info_under_next = ""
         self.__data = TimeMeasurement()
+        self.container_for_time = time.time()
+        self._time_for_tick = 1
 
     def button_mod(self):
 
@@ -139,6 +142,8 @@ class myGui:
                                     if x.free and x.a:
                                         x.free = False
                                         x.client_in = self.vq.pop()
+
+                                        self.__data(x.client_in.wyjscie(),"A","VIP",x.nr)
                                         self.number_of_clients[2] -= 1
                                         break
                                 else:
@@ -149,6 +154,7 @@ class myGui:
                                     if x.free and x.b:
                                         x.free = False
                                         x.client_in = self.vq.pop()
+                                        self.__data(x.client_in.wyjscie(), "B", "VIP", x.nr)
                                         self.number_of_clients[3] -= 1
                                         break
                                 else:
@@ -161,6 +167,7 @@ class myGui:
                                     if x.free and x.a:
                                         x.free = False
                                         x.client_in = self.nq.pop()
+                                        self.__data(x.client_in.wyjscie(), "A", "N", x.nr)
                                         self.number_of_clients[0] -= 1
                                         break
                                 else:
@@ -171,6 +178,7 @@ class myGui:
                                     if x.free and x.b:
                                         x.free = False
                                         x.client_in = self.nq.pop()
+                                        self.__data(x.client_in.wyjscie(), "B", "N", x.nr)
                                         self.number_of_clients[1] -= 1
                                         break
                                 else:
@@ -214,9 +222,9 @@ class myGui:
         for x in self.counters:
             """zmiana na True po uplywie 3 s "czas obslugiwania klienta" """
             if not x.free and not x.is_measure_time:
-                x.start_time = time()
+                x.start_time = time.time()
                 x.is_measure_time = True
-            if x.is_measure_time and (time() - x.start_time) > 3:
+            if x.is_measure_time and (time.time() - x.start_time) > 3:
                 x.free = True
                 x.is_measure_time = False
                 x.client_in = 0
@@ -257,8 +265,6 @@ class myGui:
         pygame.draw.line(self.screen, (255, 255, 255),
                          (1 / 8 * self.screen_lenght, 9 / 10 * self.screen_width),
                          (7 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
-
-
 
         # vertical
         pygame.draw.line(self.screen, (255, 255, 255),
@@ -306,8 +312,6 @@ class myGui:
         text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
-
-
         label = font.render("Sprawa A", 1, (255, 255, 255))
         text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 2 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
@@ -338,9 +342,6 @@ class myGui:
         text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6.8 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
-
-
-
     def drawing(self):
 
         font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
@@ -363,10 +364,10 @@ class myGui:
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x + 10, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
 
-
         label = font.render(self.info_under_next, 1, (255, 255, 255))
         """dla next"""
-        text_rect = self.b[4].label.get_rect(center=(self.b[4].length / 2 + 0.87*self.b[4].x, 1.2 * self.b[4].width + self.b[4].y))
+        text_rect = self.b[4].label.get_rect(
+            center=(self.b[4].length / 2 + 0.87 * self.b[4].x, 1.2 * self.b[4].width + self.b[4].y))
         self.screen.blit(label, text_rect)
 
         for x in self.cb:
@@ -433,7 +434,7 @@ class myGui:
         if not self.counters[1].free:
             temp_str = " o"
 
-        label = font.render("Okienko 2"  + temp_str, 1, (255, 255, 255))
+        label = font.render("Okienko 2" + temp_str, 1, (255, 255, 255))
         text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
         temp_str = ""
@@ -441,7 +442,7 @@ class myGui:
         if not self.counters[2].free:
             temp_str = " o"
 
-        label = font.render("Okienko 3"  + temp_str, 1, (255, 255, 255))
+        label = font.render("Okienko 3" + temp_str, 1, (255, 255, 255))
         text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
         temp_str = ""
@@ -495,6 +496,14 @@ class myGui:
         self.screen.fill((0, 0, 0))  # odświerzanie
         self.drawing()
         self.events()
+
+        if ((time.time() - self.container_for_time)%2 > 1):
+            for x in self.vq:
+                x.tick()
+            for x in self.nq:
+                x.tick()
+            self.container_for_time = time.time()
+
         pygame.display.flip()
 
     # gs
@@ -504,8 +513,16 @@ class myGui:
         return self.__info_under_next
 
     @info_under_next.setter
-    def info_under_next(self,text):
+    def info_under_next(self, text):
         self.__info_under_next = text
+
+    @property
+    def time_for_tick(self):
+        return self._time_for_tick
+
+    @time_for_tick.setter
+    def time_for_tick(self, t):
+        self._time_for_tick = t
 
     @property
     def counters(self):

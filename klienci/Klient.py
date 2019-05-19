@@ -14,7 +14,7 @@ class Klient:
 
     @property
     def waiting_time(self):
-        return self.waiting_time
+        return self._waiting_time
 
     @waiting_time.setter
     def waiting_time(self,wt):
@@ -32,8 +32,8 @@ class Klient:
         self._waiting_time = time.clock_gettime(0)
 
     def wyjscie(self):
-        self._waiting_time = time.clock_gettime(0) - self._waiting_time
-        print(self._waiting_time)
+        self._waiting_time = time.clock_gettime(0) - self._waiting_time + 3
+        return self._waiting_time
 
     def tick(self):
         pass

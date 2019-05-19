@@ -7,3 +7,6 @@ class KlientZwykly(Klient):
         self.x = 1
     def __str__(self):
         return KlientZwykly.__name__+ ' ' + super(KlientZwykly,self).__str__()
+
+    def tick(self):
+        pass
