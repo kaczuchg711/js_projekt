@@ -10,6 +10,11 @@ class myQueue():
             print("wtf")
         return self.tab.pop(0)
 
+    def get_first(self):
+        if (self.tab.__len__() == 0):
+            print("wtf")
+        return self.tab[0]
+
 
     def push(self, x):
         x.wejscie()

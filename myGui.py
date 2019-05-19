@@ -4,6 +4,9 @@ from klienci.KlientZwykly import *
 from klienci.KlientVIP import *
 from Counter import *
 from myQueue import *
+from myException import *
+from time import *
+
 class myGui:
     def __init__(self):
         pygame.init()
@@ -20,7 +23,7 @@ class myGui:
         self.CheckBox_mod()
         self.__nq = myQueue("normalna")
         self.__vq = myQueue("vip")
-        self.__w = [Counter(0),Counter(1),Counter(2)]
+        self.__counters = [Counter(0), Counter(1), Counter(2)]
 
     def button_mod(self):
 
@@ -92,55 +95,70 @@ class myGui:
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[0]):
                 """dodawanie klientów"""
                 self.nq.push(KlientZwykly("A"))
-                self.number_of_clients[0] +=1
+                self.number_of_clients[0] += 1
                 print("dodanie klienta A")
                 print("kolejka VIP", self.vq)
                 print("kolejka zwykla", self.nq)
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[1]):
                 self.nq.push(KlientZwykly("B"))
-                self.number_of_clients[1] +=1
+                self.number_of_clients[1] += 1
                 print("dodawanie klientów B")
                 print("kolejka VIP", self.vq)
                 print("kolejka zwykla", self.nq)
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[2]):
                 self.vq.push(KlientVIP("A"))
-                self.number_of_clients[2] +=1
+                self.number_of_clients[2] += 1
                 print("dodawanie klientów VIP A")
                 print("kolejka VIP", self.vq)
                 print("kolejka zwykla", self.nq)
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[3]):
                 self.vq.push(KlientVIP("B"))
-                self.number_of_clients[3] +=1
+                self.number_of_clients[3] += 1
                 print("dodawanie klientów VIP B")
                 print("kolejka VIP", self.vq)
                 print("kolejka zwykla", self.nq)
 
-
-            # do tablicy vq dodaje normalnych klijentów do nq chyba tez dodaje vip
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[4]):
-                if self.vq.empty() == False:
-                    temp = self.vq.pop()
+                if not self.vq.empty():
+                    temp_klient = self.vq.get_first()
+                    if temp_klient.kind == "A":
+                        for x in self.counters:
+                            print(x)
+                            if x.free and x.a:
+                                x.free = False
+                                x.client_in = self.vq.pop()
+                                self.number_of_clients[2] -= 1
+                                break
+                        else:
+                            raise NoProperCounter
+                    elif temp_klient.kind == "B":
+                        for x in self.counters:
+                            print(x)
+                            if x.free and x.b:
+                                x.free = False
+                                x.client_in = self.vq.pop()
+                                self.number_of_clients[3] -= 1
+                                break
+                        else:
+                            raise NoProperCounter
+                elif not self.nq.empty():
+                    temp = self.nq.get_first()
                     if temp.kind == "A":
-                        self.number_of_clients[2] -=1
-                    if temp.kind == "B":
-                        self.number_of_clients[3] -=1
-                elif self.nq.empty() == False:
-                    temp = self.nq.pop()
-                    if temp.kind == "A":
-                        self.number_of_clients[0] -=1
-                    if temp.kind == "B":
-                        self.number_of_clients[1] -=1
-
-
-
-
-
-
-
-
-
-
-
+                        for x in self.counters:
+                            print(x)
+                            if x.free and x.a:
+                                x.free = False
+                                x.client_in = self.nq.pop()
+                                self.number_of_clients[0] -= 1
+                                break
+                    elif temp.kind == "B":
+                        for x in self.counters:
+                            print(x)
+                            if x.free and x.b:
+                                x.free = False
+                                x.client_in = self.nq.pop()
+                                self.number_of_clients[1] -= 1
+                                break
 
             for x in self.cb:
                 if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(x):
@@ -151,25 +169,35 @@ class myGui:
                         x.is_check = True
                         print(x.is_check)
 
-
-
-
-        for i,x in enumerate(self.cb):
+        for i, x in enumerate(self.cb):
 
             if x in self.cb[:3]:
-                if self.cb[i].is_check and not self.__w[i].a:
-                    self.__w[i].a = True
-                    print(self.__w[i])
-                if not self.cb[i].is_check and self.__w[i].a:
-                    self.__w[i].a = False
-                    print(self.__w[i])
+                if self.cb[i].is_check and not self.counters[i].a:
+                    self.counters[i].a = True
+                    print(self.counters[i])
+                if not self.cb[i].is_check and self.counters[i].a:
+                    self.counters[i].a = False
+                    print(self.counters[i])
+
             if x in self.cb[3:]:
-                if self.cb[i].is_check and not self.__w[i%3].b:
-                    self.__w[i%3].b = True
-                    print(self.__w[i%3])
-                if not self.cb[i].is_check and self.__w[i%3].b:
-                    self.__w[i%3].b = False
-                    print(self.__w[i%3])
+                if self.cb[i].is_check and not self.counters[i % 3].b:
+                    self.counters[i % 3].b = True
+                    print(self.counters[i % 3])
+                if not self.cb[i].is_check and self.counters[i % 3].b:
+                    self.counters[i % 3].b = False
+                    print(self.counters[i % 3])
+
+        for x in self.counters:
+            """zmiana na True po uplywie 3 s "czas obslugiwania klienta" """
+            if not x.free and not x.is_measure_time:
+                x.start_time = time()
+                x.is_measure_time = True
+            if x.is_measure_time and (time() - x.start_time) > 3:
+                x.free = True
+                x.is_measure_time = False
+                x.client_in = 0
+                print("koniec obslugi")
+
 
 
 
@@ -187,15 +215,14 @@ class myGui:
 
         # czyli tu musi być osobno
 
-
-        for i,x in enumerate(self.b[:2]):
+        for i, x in enumerate(self.b[:2]):
             label = font.render(self.number_of_clients[i].__str__(), 1, (255, 255, 255))
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
 
         # to storzone tylko dla przesuniecia tego + 10
-        for i,x in enumerate(self.b[2:4]):
-            label = font.render(self.number_of_clients[i+2].__str__(), 1, (255, 255, 255))
+        for i, x in enumerate(self.b[2:4]):
+            label = font.render(self.number_of_clients[i + 2].__str__(), 1, (255, 255, 255))
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x + 10, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
 
@@ -250,17 +277,31 @@ class myGui:
 
         # napisy
 
-        label = font.render("Okienko 1", 1, (255, 255, 255))
+        temp_str = ""
+
+        if not self.counters[0].free:
+            temp_str = " o"
+
+        label = font.render("Okienko 1" + temp_str, 1, (255, 255, 255))
         text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
+        temp_str = ""
 
-        label = font.render("Okienko 2", 1, (255, 255, 255))
+        if not self.counters[1].free:
+            temp_str = " o"
+
+        label = font.render("Okienko 2"  + temp_str, 1, (255, 255, 255))
         text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
+        temp_str = ""
 
-        label = font.render("Okienko 3", 1, (255, 255, 255))
+        if not self.counters[2].free:
+            temp_str = " o"
+
+        label = font.render("Okienko 3"  + temp_str, 1, (255, 255, 255))
         text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
+        temp_str = ""
 
         label = font.render("Łącznie", 1, (255, 255, 255))
         text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
@@ -308,10 +349,19 @@ class myGui:
 
     def go(self):
         self.mouse_pos = pygame.mouse.get_pos()
-        self.screen.fill((0, 0, 0)) #odświerzanie
+        self.screen.fill((0, 0, 0))  # odświerzanie
         self.drawing()
         pygame.display.flip()
-    #gs
+
+    # gs
+
+    @property
+    def counters(self):
+        return self.__counters
+
+    @counters.setter
+    def counters(self, counters):
+        self.__counters = counters
 
     @property
     def nq(self):
@@ -346,7 +396,7 @@ class myGui:
         return self.__number_of_clients
 
     @number_of_clients.setter
-    def __numer_of_clients(self, v):
+    def number_of_clients(self, v):
         self.__number_of_clients = v
 
     @property
@@ -458,9 +508,7 @@ class Button:
     def label(self, l):
         self.__lenght = l
 
-
     #
-
 
 
 class CheckBox(Button):
