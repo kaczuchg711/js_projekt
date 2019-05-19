@@ -24,6 +24,8 @@ class myGui:
         self.__nq = myQueue("normalna")
         self.__vq = myQueue("vip")
         self.__counters = [Counter(0), Counter(1), Counter(2)]
+        font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
+        self.__info_under_next = ""
 
     def button_mod(self):
 
@@ -50,7 +52,7 @@ class myGui:
         self.b[4].change_writing_color((0, 0, 0))
 
         self.b[5].change_pos(self.screen_lenght / 2 - self.b[5].length / 2., self.screen_width - (self.b[5].width + 10))
-        self.b[5].color = (255, 0, 128)
+        self.b[5].color = (255, 255, 128)
         self.b[5].change_writing("Koniec")
         self.b[5].change_writing_color((0, 0, 0))
 
@@ -61,9 +63,6 @@ class myGui:
         self.cb[3].change_pos(3.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_width)
         self.cb[4].change_pos(4.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_width)
         self.cb[5].change_pos(5.35 / 8 * self.screen_lenght, 6.3 / 10 * self.screen_width)
-
-    def get_cb_to_check(self):
-        return [x for x in self.cb if x.on_mouse]
 
     def mouse_on_obj(self, obj):
         if obj.x < self.mouse_pos[0] < obj.x + obj.length \
@@ -119,46 +118,60 @@ class myGui:
                 print("kolejka zwykla", self.nq)
 
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[4]):
-                if not self.vq.empty():
-                    temp_klient = self.vq.get_first()
-                    if temp_klient.kind == "A":
-                        for x in self.counters:
-                            print(x)
-                            if x.free and x.a:
-                                x.free = False
-                                x.client_in = self.vq.pop()
-                                self.number_of_clients[2] -= 1
-                                break
-                        else:
-                            raise NoProperCounter
-                    elif temp_klient.kind == "B":
-                        for x in self.counters:
-                            print(x)
-                            if x.free and x.b:
-                                x.free = False
-                                x.client_in = self.vq.pop()
-                                self.number_of_clients[3] -= 1
-                                break
-                        else:
-                            raise NoProperCounter
-                elif not self.nq.empty():
-                    temp = self.nq.get_first()
-                    if temp.kind == "A":
-                        for x in self.counters:
-                            print(x)
-                            if x.free and x.a:
-                                x.free = False
-                                x.client_in = self.nq.pop()
-                                self.number_of_clients[0] -= 1
-                                break
-                    elif temp.kind == "B":
-                        for x in self.counters:
-                            print(x)
-                            if x.free and x.b:
-                                x.free = False
-                                x.client_in = self.nq.pop()
-                                self.number_of_clients[1] -= 1
-                                break
+                try:
+                    if any(self.counters):
+                        if not self.vq.empty():
+                            temp_klient = self.vq.get_first()
+                            if temp_klient.kind == "A":
+                                for x in self.counters:
+                                    print(x)
+                                    if x.free and x.a:
+                                        x.free = False
+                                        x.client_in = self.vq.pop()
+                                        self.number_of_clients[2] -= 1
+                                        break
+                                else:
+                                    raise NoProperCounter
+                            elif temp_klient.kind == "B":
+                                for x in self.counters:
+                                    print(x)
+                                    if x.free and x.b:
+                                        x.free = False
+                                        x.client_in = self.vq.pop()
+                                        self.number_of_clients[3] -= 1
+                                        break
+                                else:
+                                    raise NoProperCounter
+                        elif not self.nq.empty():
+                            temp = self.nq.get_first()
+                            if temp.kind == "A":
+                                for x in self.counters:
+                                    print(x)
+                                    if x.free and x.a:
+                                        x.free = False
+                                        x.client_in = self.nq.pop()
+                                        self.number_of_clients[0] -= 1
+                                        break
+                                else:
+                                    raise NoProperCounter
+                            elif temp.kind == "B":
+                                for x in self.counters:
+                                    print(x)
+                                    if x.free and x.b:
+                                        x.free = False
+                                        x.client_in = self.nq.pop()
+                                        self.number_of_clients[1] -= 1
+                                        break
+                                else:
+                                    raise NoProperCounter
+                    else:
+                        raise NoFreeCounter
+                except NoProperCounter:
+                    self.info_under_next = "brak odpowiedniej bramki"
+                except NoFreeCounter:
+                    self.info_under_next = "brak wolnej bramki"
+                else:
+                    self.info_under_next = ""
 
             for x in self.cb:
                 if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(x):
@@ -198,10 +211,6 @@ class myGui:
                 x.client_in = 0
                 print("koniec obslugi")
 
-
-
-
-
     def drawing(self):
 
         font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
@@ -213,8 +222,6 @@ class myGui:
             # ile czeka
             self.screen.blit(x.label, text_rect)
 
-        # czyli tu musi być osobno
-
         for i, x in enumerate(self.b[:2]):
             label = font.render(self.number_of_clients[i].__str__(), 1, (255, 255, 255))
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x, 1.2 * x.width + x.y))
@@ -225,6 +232,12 @@ class myGui:
             label = font.render(self.number_of_clients[i + 2].__str__(), 1, (255, 255, 255))
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x + 10, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
+
+
+        label = font.render(self.info_under_next, 1, (255, 255, 255))
+        """dla next"""
+        text_rect = self.b[4].label.get_rect(center=(self.b[4].length / 2 + 0.87*self.b[4].x, 1.2 * self.b[4].width + self.b[4].y))
+        self.screen.blit(label, text_rect)
 
         for x in self.cb:
             """check box"""
@@ -354,6 +367,14 @@ class myGui:
         pygame.display.flip()
 
     # gs
+
+    @property
+    def info_under_next(self):
+        return self.__info_under_next
+
+    @info_under_next.setter
+    def info_under_next(self,text):
+        self.__info_under_next = text
 
     @property
     def counters(self):

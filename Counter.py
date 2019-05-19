@@ -18,6 +18,8 @@ class Counter:
         """remove window number in nr_set"""
         Counter.nr_set.remove(self._nr)
 
+    def __bool__(self):
+        return self.free
     @property
     def start_time(self):
         return self._start_time

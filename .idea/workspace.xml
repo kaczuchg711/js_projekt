@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3220a77-a7d3-4991-8675-2f9feb08cb5f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/myException.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="e3220a77-a7d3-4991-8675-2f9feb08cb5f" name="Default Changelist" comment="ok next done without time">
       <change beforePath="$PROJECT_DIR$/.idea/projekt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projekt.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Counter.py" beforeDir="false" afterPath="$PROJECT_DIR$/Counter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myException.py" beforeDir="false" afterPath="$PROJECT_DIR$/myException.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/myGui.py" beforeDir="false" afterPath="$PROJECT_DIR$/myGui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myQueue.py" beforeDir="false" afterPath="$PROJECT_DIR$/myQueue.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            <state relative-caret-position="195">
+              <caret line="13" column="10" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="10" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -34,18 +31,38 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/myGui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="115" column="46" lean-forward="true" selection-start-line="115" selection-start-column="46" selection-end-line="115" selection-end-column="46" />
+            <state relative-caret-position="324">
+              <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
-                <marker date="1558265703435" expanded="true" signature="9824:12314" ph="..." />
-                <marker date="1558265703435" expanded="true" signature="12432:13897" ph="..." />
-                <marker date="1558265703435" expanded="true" signature="13917:15407" ph="..." />
-                <marker date="1558265703435" expanded="false" signature="15600:16923" ph="..." />
-                <marker date="1558265703435" expanded="true" signature="15761:16923" ph="..." />
-                <marker date="1558265703435" expanded="true" signature="16004:16923" ph="..." />
-                <marker date="1558265703435" expanded="false" signature="18006:18727" ph="..." />
+                <element signature="e#904#2054#0" />
+                <element signature="e#2092#2629#0" />
+                <element signature="e#2754#3000#0" />
+                <element signature="e#8948#15964#0" />
+                <element signature="e#15446#15590#0" />
+                <element signature="e#17095#17520#0" />
+                <element signature="e#17562#17665#0" />
+                <element signature="e#17714#17816#0" />
+                <element signature="e#17877#17991#0" />
+                <element signature="e#18764#19312#0" />
+                <marker date="1558277981943" expanded="false" signature="11003:13493" ph="..." />
+                <marker date="1558277981943" expanded="true" signature="13611:15076" ph="..." />
+                <marker date="1558277981943" expanded="true" signature="15096:16586" ph="..." />
+                <marker date="1558277981943" expanded="false" signature="16779:18289" ph="..." />
+                <marker date="1558277981943" expanded="true" signature="16966:18289" ph="..." />
+                <marker date="1558277981943" expanded="true" signature="17127:18289" ph="..." />
+                <marker date="1558277981943" expanded="true" signature="17370:18289" ph="..." />
+                <marker date="1558277981943" expanded="false" signature="19372:20093" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../lab/js_lab7/myException.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
             </state>
           </provider>
         </entry>
@@ -53,7 +70,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/myQueue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="623">
+            <state relative-caret-position="330">
               <caret line="22" selection-start-line="22" selection-end-line="22" selection-end-column="22" />
             </state>
           </provider>
@@ -62,8 +79,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Counter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-348">
-              <caret line="9" column="24" lean-forward="true" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+            <state relative-caret-position="483">
+              <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/myException.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="4" column="19" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../lab/js_lab7/pieniadze.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="392">
+              <caret line="77" column="16" lean-forward="true" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,10 +123,12 @@
       <find>even</find>
       <find>nast</find>
       <find>nex</find>
-      <find>next</find>
-      <find>b[4]</find>
       <find>__w</find>
       <find>draw</find>
+      <find>next</find>
+      <find>b[4]</find>
+      <find>get_cb_to_check</find>
+      <find>try</find>
     </findStrings>
     <replaceStrings>
       <replace>(dq)</replace>
@@ -122,10 +162,10 @@
         <option value="$PROJECT_DIR$/klienci/KlientZwykly.py" />
         <option value="$PROJECT_DIR$/TimeMeasurement.py" />
         <option value="$PROJECT_DIR$/Window.py" />
-        <option value="$PROJECT_DIR$/myException.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/Counter.py" />
         <option value="$PROJECT_DIR$/myQueue.py" />
+        <option value="$PROJECT_DIR$/myException.py" />
+        <option value="$PROJECT_DIR$/Counter.py" />
         <option value="$PROJECT_DIR$/myGui.py" />
       </list>
     </option>
@@ -169,7 +209,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab/js_lab7" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.postfix.templates" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -331,7 +371,14 @@
       <option name="project" value="LOCAL" />
       <updated>1558254108563</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ok next done without time">
+      <created>1558267643637</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1558267643637</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -362,7 +409,19 @@
     <MESSAGE value="Clients push myQueues and Koniec pop Clients" />
     <MESSAGE value="with and lenght" />
     <MESSAGE value="start doing next" />
-    <option name="LAST_COMMIT_MESSAGE" value="start doing next" />
+    <MESSAGE value="ok next done without time" />
+    <option name="LAST_COMMIT_MESSAGE" value="ok next done without time" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/myGui.py</url>
+          <line>75</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../../aaamoje/python/python_geometry/main.py" />
@@ -431,28 +490,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../lab/js_lab7/myException.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" selection-start-line="3" selection-end-line="4" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myException.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../lab/js_lab7/lista.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
       <provider selected="true" editor-type-id="csv-text-editor">
         <state>
           <caret selection-end-column="1" />
         </state>
-      </provider>
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/klienci/KlientZwykly.py">
@@ -469,10 +514,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/myQueue.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <caret line="22" selection-start-line="22" selection-end-line="22" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../lab/js_lab7/pieniadze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="77" column="16" lean-forward="true" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../lab/js_lab7/myException.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="10" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="10" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -481,31 +550,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Counter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-348">
-          <caret line="9" column="24" lean-forward="true" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+        <state relative-caret-position="483">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/myQueue.py">
+    <entry file="file://$PROJECT_DIR$/myException.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="22" selection-start-line="22" selection-end-line="22" selection-end-column="22" />
+        <state relative-caret-position="136">
+          <caret line="4" column="19" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/myGui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="115" column="46" lean-forward="true" selection-start-line="115" selection-start-column="46" selection-end-line="115" selection-end-column="46" />
+        <state relative-caret-position="324">
+          <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
-            <marker date="1558265703435" expanded="true" signature="9824:12314" ph="..." />
-            <marker date="1558265703435" expanded="true" signature="12432:13897" ph="..." />
-            <marker date="1558265703435" expanded="true" signature="13917:15407" ph="..." />
-            <marker date="1558265703435" expanded="false" signature="15600:16923" ph="..." />
-            <marker date="1558265703435" expanded="true" signature="15761:16923" ph="..." />
-            <marker date="1558265703435" expanded="true" signature="16004:16923" ph="..." />
-            <marker date="1558265703435" expanded="false" signature="18006:18727" ph="..." />
+            <element signature="e#904#2054#0" />
+            <element signature="e#2092#2629#0" />
+            <element signature="e#2754#3000#0" />
+            <element signature="e#8948#15964#0" />
+            <element signature="e#15446#15590#0" />
+            <element signature="e#17095#17520#0" />
+            <element signature="e#17562#17665#0" />
+            <element signature="e#17714#17816#0" />
+            <element signature="e#17877#17991#0" />
+            <element signature="e#18764#19312#0" />
+            <marker date="1558277981943" expanded="false" signature="11003:13493" ph="..." />
+            <marker date="1558277981943" expanded="true" signature="13611:15076" ph="..." />
+            <marker date="1558277981943" expanded="true" signature="15096:16586" ph="..." />
+            <marker date="1558277981943" expanded="false" signature="16779:18289" ph="..." />
+            <marker date="1558277981943" expanded="true" signature="16966:18289" ph="..." />
+            <marker date="1558277981943" expanded="true" signature="17127:18289" ph="..." />
+            <marker date="1558277981943" expanded="true" signature="17370:18289" ph="..." />
+            <marker date="1558277981943" expanded="false" signature="19372:20093" ph="..." />
           </folding>
         </state>
       </provider>
