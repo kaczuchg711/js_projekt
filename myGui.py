@@ -11,14 +11,17 @@ import os
 
 
 class myGui:
+    restart = False
+
     def __init__(self):
         pygame.init()
         self.__screen_lenght = 1000
-        self.__screen_width = 800
+        self.__screen_width = 900
         self.__screen = pygame.display.set_mode((self.__screen_lenght, self.__screen_width))
         self.__exit = False
         self.__mouse_pos = []
         self.__b = [Button() for x in range(6)]
+        self._restart_button = Button()
         self.__cb = [CheckBox() for x in range(6)]
         self.__t = [0 for x in range(6)]
         self.__number_of_clients = [0 for x in range(4)]
@@ -27,11 +30,17 @@ class myGui:
         self.__nq = myQueue("normalna")
         self.__vq = myQueue("vip")
         self.__counters = [Counter(0), Counter(1), Counter(2)]
-        font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
+
         self.__info_under_next = ""
         self.__data = TimeMeasurement()
         self.container_for_time = time.time()
         self._time_for_tick = 1
+
+        font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
+        label = font.render("TO SKANDAL!!!", 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(100,100))
+        self.screen.blit(label, text_rect)
+
 
     def button_mod(self):
 
@@ -62,6 +71,10 @@ class myGui:
         self.b[5].change_writing("Koniec")
         self.b[5].change_writing_color((0, 0, 0))
 
+        self._restart_button.change_pos(self.screen_lenght / 2 - self._restart_button.length / 2.,
+                                        self.screen_width - (self._restart_button.width + 10))
+        self._restart_button.change_writing("Jeszcze raz")
+
     def CheckBox_mod(self):
         self.cb[0].change_pos(3.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_width)
         self.cb[1].change_pos(4.35 / 8 * self.screen_lenght, 5.3 / 10 * self.screen_width)
@@ -88,6 +101,9 @@ class myGui:
                     os.sys.exit()
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
+                if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self._restart_button):
+                    myGui.restart = True
+                    return
 
     def events(self):
         for event in pygame.event.get():
@@ -98,7 +114,6 @@ class myGui:
                 self.exit = True
             if event.type == pygame.MOUSEBUTTONDOWN and self.mouse_on_obj(self.b[5]):
                 self.screen.fill((0, 0, 0))  # odświerzanie
-
                 self.end_drawing()
                 pygame.display.flip()
                 self.wait()
@@ -143,7 +158,7 @@ class myGui:
                                         x.free = False
                                         x.client_in = self.vq.pop()
 
-                                        self.__data(x.client_in.wyjscie(),"A","VIP",x.nr)
+                                        self.__data(x.client_in.wyjscie(), "A", "VIP", x.nr)
                                         self.number_of_clients[2] -= 1
                                         break
                                 else:
@@ -292,28 +307,86 @@ class myGui:
                          (7 / 8 * self.screen_lenght, 9 / 10 * self.screen_width), 1)
 
         # napisy
-        label = font.render("Klient Zwykły", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
+        s = ["Klient Zwykły","Okienko 1","Okienko 2","Okienko 3" , "Łącznie"]
+        l = [2] + [x + 3.5 for x in range(4)]
 
-        label = font.render("Okienko 1", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(3.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render("Okienko 2", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(4.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render("Okienko 3", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(5.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
-
-        label = font.render("Łącznie", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
-        self.screen.blit(label, text_rect)
+        for string,lenght in zip(s,l):
+            label = font.render(string, 1, (255, 255, 255))
+            text_rect = label.get_rect(center=(lenght / 8 * self.screen_lenght, 1.2 / 8 * self.screen_width))
+            self.screen.blit(label, text_rect)
 
         label = font.render("Sprawa A", 1, (255, 255, 255))
         text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        prepare_time = lambda a: (str(round(a, 2)))
+
+        for i, x in enumerate([x + 3.5 for x in range(3)]):
+            """klient zwykly wiersz A"""
+            label = font.render(prepare_time(self.__data.time_N_A_issue_for_counter[i]), 1, (255, 255, 255))
+            text_rect = label.get_rect(center=(x / 8 * self.screen_lenght, 2 / 8 * self.screen_width))
+            self.screen.blit(label, text_rect)
+
+        label = font.render(prepare_time(sum(self.__data.time_N_A_issue_for_counter)), 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        for i, x in enumerate([x + 3.5 for x in range(3)]):
+            """wiersz B"""
+            label = font.render(prepare_time(self.__data.time_N_B_issue_for_counter[i]), 1, (255, 255, 255))
+            text_rect = label.get_rect(center=(x / 8 * self.screen_lenght, 2.8 / 8 * self.screen_width))
+            self.screen.blit(label, text_rect)
+
+        label = font.render(prepare_time(sum(self.__data.time_N_B_issue_for_counter)), 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 2.8 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        for i, x in enumerate([x + 3.5 for x in range(3)]):
+            """wiersz łącznie"""
+            label = font.render(
+                prepare_time(self.__data.time_N_A_issue_for_counter[i] + self.__data.time_N_B_issue_for_counter[i]), 1,
+                (255, 255, 255))
+            text_rect = label.get_rect(center=(x / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
+            self.screen.blit(label, text_rect)
+
+        label = font.render(
+            prepare_time(sum(self.__data.time_N_A_issue_for_counter + self.__data.time_N_B_issue_for_counter)), 1,
+            (255, 255, 255))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 3.6 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        for i, x in enumerate([x + 3.5 for x in range(3)]):
+            """klient VIP wiersz A"""
+            label = font.render(prepare_time(self.__data.time_V_A_issue_for_counter[i]), 1, (255, 255, 255))
+            text_rect = label.get_rect(center=(x / 8 * self.screen_lenght, 5.2 / 8 * self.screen_width))
+            self.screen.blit(label, text_rect)
+
+        label = font.render(prepare_time(sum(self.__data.time_V_A_issue_for_counter)), 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 5.2 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        for i, x in enumerate([x + 3.5 for x in range(3)]):
+            """wiersz B"""
+            label = font.render(prepare_time(self.__data.time_V_B_issue_for_counter[i]), 1, (255, 255, 255))
+            text_rect = label.get_rect(center=(x / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+            self.screen.blit(label, text_rect)
+
+        label = font.render(prepare_time(sum(self.__data.time_V_B_issue_for_counter)), 1, (255, 255, 255))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 6 / 8 * self.screen_width))
+        self.screen.blit(label, text_rect)
+
+        for i, x in enumerate([x + 3.5 for x in range(3)]):
+            """wiersz łącznie"""
+            label = font.render(
+                prepare_time(self.__data.time_V_A_issue_for_counter[i] + self.__data.time_V_B_issue_for_counter[i]), 1,
+                (255, 255, 255))
+            text_rect = label.get_rect(center=(x / 8 * self.screen_lenght, 6.8 / 8 * self.screen_width))
+            self.screen.blit(label, text_rect)
+
+        label = font.render(
+            prepare_time(sum(self.__data.time_V_A_issue_for_counter + self.__data.time_V_B_issue_for_counter)), 1,
+            (255, 255, 255))
+        text_rect = label.get_rect(center=(6.5 / 8 * self.screen_lenght, 6.8 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
         label = font.render("Sprawa B", 1, (255, 255, 255))
@@ -342,6 +415,10 @@ class myGui:
         text_rect = label.get_rect(center=(2 / 8 * self.screen_lenght, 6.8 / 8 * self.screen_width))
         self.screen.blit(label, text_rect)
 
+        # reset
+        pygame.draw.rect(self.screen, self._restart_button.color, self._restart_button.shape)
+        text_rect = self._restart_button.label.get_rect(center=(self._restart_button.length / 2 + self._restart_button.x, self._restart_button.width / 2 + self._restart_button.y))  # centrowanie npaisu
+        self.screen.blit(self._restart_button.label, text_rect)
     def drawing(self):
 
         font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
@@ -497,7 +574,7 @@ class myGui:
         self.drawing()
         self.events()
 
-        if ((time.time() - self.container_for_time)%2 > 1):
+        if ((time.time() - self.container_for_time) % 2 > 1):
             for x in self.vq:
                 x.tick()
             for x in self.nq:
