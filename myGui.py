@@ -36,10 +36,9 @@ class myGui:
         self.container_for_time = time.time()
         self._time_for_tick = 1
 
-        font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
-        label = font.render("TO SKANDAL!!!", 1, (255, 255, 255))
-        text_rect = label.get_rect(center=(100,100))
-        self.screen.blit(label, text_rect)
+        self.font = pygame.font.SysFont("dejavumathtexgyre", 18)  # txt
+        self.skandal = self.font.render("", 1, (255, 0, 0))
+
 
 
     def button_mod(self):
@@ -441,6 +440,9 @@ class myGui:
             text_rect = x.label.get_rect(center=(x.length / 2 + x.x + 10, 1.2 * x.width + x.y))
             self.screen.blit(label, text_rect)
 
+        text_rect = self.b[2].label.get_rect(center=(self.b[2].length / 2 + self.b[2].x + 10, 1.5 * self.b[2].width + self.b[2].y))
+        self.screen.blit(self.skandal,text_rect)
+
         label = font.render(self.info_under_next, 1, (255, 255, 255))
         """dla next"""
         text_rect = self.b[4].label.get_rect(
@@ -576,7 +578,9 @@ class myGui:
 
         if ((time.time() - self.container_for_time) % 2 > 1):
             for x in self.vq:
-                x.tick()
+
+                self.skandal = self.font.render(x.tick(), 1, (255, 0, 0))
+
             for x in self.nq:
                 x.tick()
             self.container_for_time = time.time()

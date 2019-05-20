@@ -11,8 +11,10 @@ class KlientVIP(Klient):
     def tick(self):
         self.sec += 1
         if self.sec == 10:
-            print("to skandaliczne")
             self.sec = 0
+            return "TO Skandaliczne!!!"
+        else:
+            return ""
 
     @property
     def was_cry(self):
