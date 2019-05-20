@@ -19,7 +19,7 @@ while not g.exit:
 if myGui.restart:
     os.system("python3 main.py nie plagiatowałem")
 
-
+nananana
 
 
 
